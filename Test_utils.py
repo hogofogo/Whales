@@ -6,6 +6,44 @@ Created on Thu Feb 15 08:16:18 2018
 @author: vlad
 """
 
+
+#MODEL TO COMPUTE PREDICTED EMBEDDINGS; IT DOESN'T GET TRAINED
+def WhaleModel(input_shape=(224, 224, 3)):
+
+    in_X = Input(shape =(224, 224, 3))
+
+    shared_dense1 = Dense(4096, activation='relu', name='fc1')
+    shared_dense2 = Dense(4096, activation='relu', name='fc2')
+    shared_dense3 = Dense(121, name='predictions')
+    shared_L2norm = Lambda(lambda  x: K.l2_normalize(x,axis=1))
+
+    #baseModel is defined in New_whaleModel as VGG16 with disabled top layers
+    X = baseModel(in_X)
+    X = shared_dense1(X)
+    X = shared_dense2(X)
+    X = shared_dense3(X)
+    X = shared_L2norm(X)
+
+    #create Keras model instance
+    model = Model(inputs = in_X, outputs = X, name='WhaleModel')
+
+    return model
+
+whaleModel = WhaleModel(input_shape=(224, 224, 3))
+
+#just need to compile the model with weights from whaleModel_fuse that can accept input
+#save model into h5 and load weights into whaleModel
+#whaleModel_fuse.save('/Users/vlad/Projects/whales/whales_model/whaleModel_fuse.h5')
+
+whaleModel = WhaleModel(input_shape=(224, 224, 3))
+whaleModel.load_weights('/Users/vlad/Projects/whales/whales_model/whaleModel_fuse.h5', by_name=True)
+#embedding_test is just to make sure the embeddings get changed with training, i.e. the model
+#uses updated weights when loaded
+#embedding_test = img_to_encoding(test_img_path, whaleModel)
+
+
+
+
 #FUNCTION TO GET IMAGE PATH DEPENDING ON TYPE OF IMAGE
 def get_img_path(test_item, new_whale = False, img_to_store = False):
 
@@ -59,8 +97,7 @@ def img_to_encoding(image_path, model):
 
 
 
-
-
+#IDENTIFY WHALE BY ID AND STATE WHETHER IT'S IN THE DATABASE
 def id_whale(image_path, database, model):
     """
     Implements whale recognition by finding whether the image is of a known whale
@@ -95,10 +132,10 @@ def id_whale(image_path, database, model):
             min_dist = dist
             identity = name
     
-    if min_dist > 0.45:
-        print("Not in the database.")
+    if min_dist > 1.355:
+        print("Not in the database, the distance is " + str(min_dist))
     else:
-        print ("it's " + str(identity) + ", the distance is " + str(min_dist))
+            print ("it's " + str(identity) + ", the distance is " + str(min_dist))
         
     return min_dist, identity
 
@@ -182,9 +219,6 @@ it's w_33973bf, the distance is 0.31689042 CORRECT
 SUMMARY: 3 OUT OF 10 CORRECT
 
 
-
-5 OUT OF 10 IMAGES CORRECTLY IDENTIFIED AND ATTRIBUTED.
-
 FOR WHALES THAT ARE KNOWN TO BE !!!NOT!!! IN THE LIST, FROM MODIFIED IMAGES
 Not in the database.
 Not in the database.
@@ -197,32 +231,4 @@ Not in the database.
 Not in the database.
 
 '''
-
-'''
-test_positive()
-it's w_c0cfd5b, the distance is 0.29855856 CORRECT
-Not in the database.
-it's w_3f365f3, the distance is 0.26271233 CORRECT
-Not in the database.
-it's w_1632307, the distance is 0.3655736 CORRECT
-Not in the database.
-it's w_a21cc97, the distance is 0.056676168 INCORRECT
-Not in the database.
-it's w_a21cc97, the distance is 0.19906016 CORRECT
-Not in the database.
-
-test_negative()
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-Not in the database.
-'''
-
-
 

@@ -34,13 +34,7 @@ As an initial step, I have made the decision to train the model on the ~2000 uni
 
 VGG16 pre-trained model is the first segment that detect low/higher level features. The top layers of the model are disabled and substituted with custom trainable layers, together representing model whaleModel. This model is applied individually to three data feeds: Anchor, Positive and Negative. As a result, an embedding is produced for each Anchor, Positive and Negative, which are subsequently fed into a whaleModel_fuse with a custom triplet_loss objective function. The objective function seeks to maximize the difference between Anchor minus Positive, and Anchor minus Negative, and trains the top layers of whaleModel accordingly. The goal is to teach the model to recognize pictures of the same whale vs different whale, and to provide an embedding sufficiently close to that of the stored embedding to recognize a specific whale.
 
-The model is currently being trained. Preliminary results are evaluated on a sample of pictures of whale ids. A database of 10 is created from random whale ids where image count is at least 2. Two groups of 10 each are randomly picked, one for positive and one for negative, and the algorithm attempts to predict whether an image is of a whale in the database, and specifically which whale.
-
-[[After 25 training epochs, the results were:
-- positives 4 correct, 6 false(1 positive, 5 negatives)
-- negatives 10 correct
-
-Both results achieved with a cut-off distance of 0.45. The results are likely to further improve once the distance is set to reflect the differences in distances between positive and negative items (later).]]
+The model is currently being trained. The problem here is the speed: it takes ~5 hours to train one epoch, so it's a problem for a much bigger computing budget. Assuming the training reaches the point where a meaningful separation of the positives vs negatives is achieved:
 
 Next steps: 
 1. More training. There is little risk of overfitting because of the way the triple training set is designed: anchor scrolls through the available images, picks up a positive at random (if more than 1 is available) and picks a negative at random (from all available images that are not those of the anchor whale), thereby every training step is likely done on a different permutation.

@@ -52,26 +52,16 @@ In the mean time, in order to prove the model is effective in achieving its goal
 
 # Results
 
-After 20 epochs on a very small data set just to make sure the model works, and using the data from the training set (i.e. data model has already seen):
-TEST KNOWN POSITIVES, Average distance = 0.35
-it's w_b0e05b1, the distance is 0.338333 Incorrect
-it's w_6202983, the distance is 0.38594 Incorrect
-it's w_89e159a, the distance is 0.485619 Correct
-it's w_fe49bc4, the distance is 0.339121 Correct
-it's w_6c803bf, the distance is 0.626232 Correct
-it's w_2d99a0c, the distance is 0.0955512 Correct
-it's w_b0e05b1, the distance is 0.17031 Correct
+After 10 epochs on a very small data set just to make sure the model works, and using the data from the training set (i.e. data model has already seen), having increased alpha (distance) to 0.5:
+TEST KNOWN POSITIVES, Average distance = 0.28
+Out of 7: 5 identified correctly, 1 not recognized and 1 misidentified as negative.
 
-TEST KNOWN NEGATIVES, Average distance = 0.65
+TEST KNOWN NEGATIVES, Average distance = 0.61	
+Out of 7: 6 identified as negative, 1 misidentified as positive.
 
-the distance is 0.868863
-the distance is 0.427477
-the distance is 0.749044
-the distance is 0.669844
-the distance is 0.524649
-the distance is 0.681932
-the distance is 0.610231
+CONCLUSION: THE MODEL WORKS!
 
-Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger, but the model clearly works - i.e. creates differentiated distances for positive and negative test items, including the ones the model hadn't seen. I have increased alpha (distance) to 0.5 to create a more visible separation between positives and negatives and am retraining the model.
+Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger; the model clearly needs more training on a larger set of data, but at this point it is simply too much asking from it that it ports the embeddings learned from a very limited set to the population.
 
-Biggest challenge = computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings.
+Biggest challenge = computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings. I checked some misclassified images and in many cases it is pretty clear whey the model made a mistake - it would be hard for me to tell the difference.
+

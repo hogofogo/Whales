@@ -72,7 +72,6 @@ the distance is 0.524649
 the distance is 0.681932
 the distance is 0.610231
 
-Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger, but the model clearly works - i.e. creates differentiated distances for positive and negative test items.
-What I wanted to see is the gap between positive and negative distances as above. I have increased alpha (distance) to 0.5 to create a more visible separation between positives and negatives and am retraining the model.
+Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger, but the model clearly works - i.e. creates differentiated distances for positive and negative test items, including the ones the model hadn't seen. I have increased alpha (distance) to 0.5 to create a more visible separation between positives and negatives and am retraining the model.
 
-This doesn't fully solve the problem as I wanted to create embeddings to evaluate similarities between different images, but it really looks like this problem if well outside of my computation budget, even though it's pretty clear the model works. Provided I figure out where to run the model, I expect a selective pairing of positive and negative image to be productive to focus the model on finding differences where images of different whales look very similar. 
+Biggest challenge = computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings.

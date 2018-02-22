@@ -53,8 +53,9 @@ In the mean time, in order to prove the model is effective in achieving its goal
 # Results
 
 After 10 epochs on a very small data set just to make sure the model works, and using the data from the training set (i.e. data model has already seen), having increased alpha (distance) to 0.5:
+
 TEST KNOWN POSITIVES, Average distance = 0.28
-Out of 7: 5 identified correctly, 1 not recognized and 1 misidentified as negative.
+Out of 7: 5 identified correctly, 1 misidentified as negative and 1 misidentified from list of positives.
 
 TEST KNOWN NEGATIVES, Average distance = 0.61	
 Out of 7: 6 identified as negative, 1 misidentified as positive.

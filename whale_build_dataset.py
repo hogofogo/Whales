@@ -53,12 +53,6 @@ anchor_whale_list = {k: v for k, v in count_dict.items() if v['Image'] >= img_co
 #anchor_list WILL ALSO BE USED AS POSITIVE LIST
 
 
-#SELECT LIST OF IMAGES WITH THRESHOLD >=2 AND EXCLUDE new_whale
-search_whale_img_list = search_whale.loc[search_whale['Id'].isin(search_items)] 
-search_whale_img_list = search_whale_img_list['Image']
-search_whale_img_list = search_whale_img_list.values.tolist()
-
-
 #FOR EACH SEARCH ITEM, BUILD ANCHOR, POSITIVE AND NEGATIVE DATABASES FOR TRIPLET LOSS EVALUATION
 def build_item_APN(search_item, anchors_per_whale = 1, sets_per_anchor = 5):
 
@@ -121,8 +115,16 @@ def build_all_APN(ds_search_items, anchors_per_whale = 2, sets_per_anchor = 5):
 
 
 #PERFORM DS SEARCH FOR 8 GRAMS
-search_items = ds_search_items(img_count_min = 14, img_count_max = 16)
+search_items = ds_search_items(img_count_min = 13, img_count_max = 16)
 #Anchor, Positive, Negative = build_all_APN(search_items, anchors_per_whale = 2, sets_per_anchor = 5)
+
+
+#SELECT LIST OF IMAGES WITH THRESHOLD >=2 AND EXCLUDE new_whale
+search_whale_img_list = search_whale.loc[search_whale['Id'].isin(search_items)] 
+search_whale_img_list = search_whale_img_list['Image']
+search_whale_img_list = search_whale_img_list.values.tolist()
+
+
 
 #CONVERT RESULTING IMAGE LISTS INTO NUMPY ARRAYS
 Anchor = np.array(Anchor)

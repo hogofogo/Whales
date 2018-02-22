@@ -149,17 +149,15 @@ def triplet_loss(y_true, values_pred, alpha = 0.2):
 
 #THIS FUNCTION  TAKES AVAILABLE IMAGE FILES AND TURNS THEM INTO ANCHOR, POSITIVE AND
 #NEGATIVE FOR TRAINING
-def generate_arrays_from_files_BATCH(start = 0, batch_size = 210):
+def generate_arrays_from_files_BATCH(start = 0, batch_size = 327):
          
         n_batches = len(search_whale_img_list)/batch_size
     
      
         count = 0  
-        rand_gen = 0
         for item in search_whale_img_list[start:(start+batch_size)]:
             
-            rand_gen += 1
-            np.random.seed(rand_gen)
+            
             # create Numpy arrays of input data
             # anchor, positive and negative
             img_a = image.load_img('/Users/vlad/Projects/whales/train/' + item, target_size=(224, 224))
@@ -208,21 +206,21 @@ def generate_arrays_from_files_BATCH(start = 0, batch_size = 210):
 def train_model():
     
     start = 0 
-    batch_size = 210
+    batch_size = 327
     n_batches = len(search_whale_img_list)/batch_size
     
     for n in range(n_batches):
     
         Anchor, Positive, Negative = generate_arrays_from_files_BATCH(start = start, batch_size = batch_size)
         y_train = np.ones(len(Anchor)).reshape(len(Anchor),1)
-        whaleModel_fuse.fit(x = [Anchor, Positive, Negative], y = y_train, epochs = 1, batch_size = 32)
+        whaleModel_fuse.fit(x = [Anchor, Positive, Negative], y = y_train, epochs = 40, batch_size = 32)
         
         start = start + batch_size
     
-    whaleModel_fuse.save('/Users/vlad/Projects/whales/whales_model/whaleModel_fuse_test.h5')
-    
+        whaleModel_fuse.save('/Users/vlad/Projects/whales/whales_model/whaleModel_fuse_test.h5')
+        
+        print(n)
 
 
 train_model()
-train_model()
-train_model()
+

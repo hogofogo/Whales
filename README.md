@@ -51,5 +51,28 @@ Next steps:
 In the mean time, in order to prove the model is effective in achieving its goals in a small sample setting, I limited the number of whales to 23 and examined images to 327 (all whales for which we have between 13 and 16 pictures. I achieved the separation of positives and negatives I expected = great.
 
 # Results
- 
- TBD
+
+After 20 epochs on a very small data set just to make sure the model works, and using the data from the training set (i.e. data model has already seen):
+TEST KNOWN POSITIVES, Average distance = 0.35
+it's w_b0e05b1, the distance is 0.338333 Incorrect
+it's w_6202983, the distance is 0.38594 Incorrect
+it's w_89e159a, the distance is 0.485619 Correct
+it's w_fe49bc4, the distance is 0.339121 Correct
+it's w_6c803bf, the distance is 0.626232 Correct
+it's w_2d99a0c, the distance is 0.0955512 Correct
+it's w_b0e05b1, the distance is 0.17031 Correct
+
+TEST KNOWN NEGATIVES, Average distance = 0.65
+
+the distance is 0.868863
+the distance is 0.427477
+the distance is 0.749044
+the distance is 0.669844
+the distance is 0.524649
+the distance is 0.681932
+the distance is 0.610231
+
+Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger, but the model clearly works - i.e. creates differentiated distances for positive and negative test items.
+What I wanted to see is the gap between positive and negative distances as above. I have increased alpha (distance) to 0.5 to create a more visible separation between positives and negatives and am retraining the model.
+
+This doesn't fully solve the problem as I wanted to create embeddings to evaluate similarities between different images, but it really looks like this problem if well outside of my computation budget, even though it's pretty clear the model works. Provided I figure out where to run the model, I expect a selective pairing of positive and negative image to be productive to focus the model on finding differences where images of different whales look very similar. 

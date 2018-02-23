@@ -19,7 +19,7 @@ The data is dirty with images of varying quality and size. There are 4250 known 
 etc.
 The unique wales with multiple images represent a long tail and are very few in count.
 
-# Archtecture
+## Archtecture
 
 Model strategies:
 1. Softmax does not appear to be a good choice, as it would be a massive one and the model would need to be retrained for every new whale.
@@ -30,14 +30,14 @@ With the choice of model in mind, the scarcity of data appears less of a constra
 VGG16 pre-trained model is the first segment that detect low/higher level features. The top layers of the model are disabled and substituted with custom trainable layers, together representing model whaleModel. This model is applied individually to three data feeds: Anchor, Positive and Negative. As a result, an embedding is produced for each Anchor, Positive and Negative, which are subsequently fed into a whaleModel_fuse with a custom triplet_loss objective function. The objective function seeks to maximize the difference between Anchor minus Positive, and Anchor minus Negative, and trains the top layers of whaleModel accordingly. The goal is to teach the model to recognize pictures of the same whale vs different whale, and to provide an embedding sufficiently close to that of the stored embedding to recognize a specific whale.
 
 
-# Data cleaning
+## Data cleaning
 
 Data processing strategies:
 1. Create more data with available image, e.g. for unique whales with only 1 image create additional images by tilting, zooming in/out, etc.
 2. I decided to focus initially on the whales for which at least two images are available. This choice is due to the model choice. A success in building embedding based on the part of the set where multiple images are available would obviate the necessity to build more data.
-3. I will refocus on cleaning once the model has proved effective and will possibly just work on image pairing and maybe avoid doing image manipulations altogether.
+3. I will refocus on cleaning once the model has proved effective and will possibly just work on image pairing and maybe avoid doing image manipulations altogether or at least limit its scope dramatically.
 
-# Training
+## Training
 
 The model is currently being trained. The problem here is the speed: it takes ~5 hours to train one epoch, so it's a problem for a much bigger computing budget. 
 
@@ -48,7 +48,7 @@ Next steps:
 
 2. At this stage, hands-on selection of data inputs is required to fine-tune model performance. By looking at misclassified triplets of images, it is pretty clear why the algorithm made a mistake because images are quite similar. It would make sense to start pairing positives and negatives more selectively so that the compared images resemble of each other, and adding such triplets to training data. Creation of more data as appropriate might also be productive.
 
-# Results
+## Results
 
 After 10 epochs on a very small data set just to make sure the model works, and using the data from the training set (i.e. data model has already seen), having increased alpha (distance) to 0.5:
 

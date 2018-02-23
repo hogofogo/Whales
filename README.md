@@ -1,12 +1,10 @@
-# whales_model
+# whales model
 
 ## Overview
 
 https://www.kaggle.com/c/whale-categorization-playground
 
-"This training data contains thousands of images of humpback whale flukes. Individual whales have been identified by researchers 
-and given an Id. The challenge is to predict the whale Id of images in the test set. What makes this such a challenge is that 
-there are only a few examples for each of 3,000+ whale Ids."
+From Kaggle: This training data contains thousands of images of humpback whale flukes. Individual whales have been identified by researchers and given an Id. The challenge is to predict the whale Id of images in the test set. What makes this such a challenge is that  there are only a few examples for each of 3,000+ whale Ids.
 =======
 The data is dirty with images of varying quality and size. There are 4250 known whales represented by 9040 images, of which 2220 whales have only one(!) image in the training set. Images per whale / unique whales are distributed as follows:
 1:	2220, 
@@ -36,19 +34,19 @@ VGG16 pre-trained model is the first segment that detect low/higher level featur
 
 Data processing strategies:
 1. Create more data with available image, e.g. for unique whales with only 1 image create additional images by tilting, zooming in/out, etc.
-2. I decided to focus initially on the whales for which at least two images are available. This choice is due to the model choice.
+2. I decided to focus initially on the whales for which at least two images are available. This choice is due to the model choice. A success in building embedding based on the part of the set where multiple images are available would obviate the necessity to build more data.
+3. I will refocus on cleaning once the model has proved effective and will possibly just work on image pairing and maybe avoid doing image manipulations altogether.
 
 # Training
 
 The model is currently being trained. The problem here is the speed: it takes ~5 hours to train one epoch, so it's a problem for a much bigger computing budget. 
 
-Assuming the training reaches the point where a meaningful separation of the positives vs negatives is achieved:
+I have succeeded in achieving a meaningful separation of the positives vs negatives on a small data set  - see results below. I limited the number of whales to 23 and examined images to 327 (all whales for which we have between 13 and 16 pictures.
 
 Next steps: 
-1. More training. There is little risk of overfitting because of the way the triple training set is designed: anchor scrolls through the available images, picks up a positive at random (if more than 1 is available) and picks a negative at random (from all available images that are not those of the anchor whale), thereby every training step is likely done on a different permutation.
-2. At this stage, hands-on selection of data inputs is required. By looking at misclassified triplets of images, it is pretty clear why the algorithm made a mistake because images are quite similar. It would make sense to start pairing positives and negatives more selectively so that the compared images resemble of each other, and adding such triplets to training data. Creation of more data as appropriate might also be productive.
+1. More training. There is little risk of overfitting because of the way the triple training set is designed: anchor scrolls through the available images, picks up a positive at random (if more than 1 is available) and picks a negative at random (from all available images that are not those of the anchor whale), thereby every training step is likely done on a different permutation. My goal is to extend the performance to a much larger input data set.
 
-In the mean time, in order to prove the model is effective in achieving its goals in a small sample setting, I limited the number of whales to 23 and examined images to 327 (all whales for which we have between 13 and 16 pictures. I achieved the separation of positives and negatives I expected = great.
+2. At this stage, hands-on selection of data inputs is required to fine-tune model performance. By looking at misclassified triplets of images, it is pretty clear why the algorithm made a mistake because images are quite similar. It would make sense to start pairing positives and negatives more selectively so that the compared images resemble of each other, and adding such triplets to training data. Creation of more data as appropriate might also be productive.
 
 # Results
 

@@ -110,7 +110,7 @@ whaleModel_fuse.fit(x = [Anchor, Positive, Negative], y = y_train, epochs = 1)
 
 
 
-def triplet_loss(y_true, values_pred, alpha = 0.2):
+def triplet_loss(y_true, values_pred, alpha = 0.5):
     """
     Implementation of the triplet loss as defined by formula (3)
     
@@ -169,7 +169,11 @@ def generate_arrays_from_files_BATCH(start = 0, batch_size = 327):
                             
             whale_name = search_whale.loc[search_whale['Image'] == item, 'Id'][0]             
             Pos = search_whale.loc[(search_whale['Id'] == whale_name) & (search_whale['Image'] != item)]
-            Neg = search_whale.loc[search_whale['Id'] != whale_name]
+            #!!! THIS IS A TEMPORARY CHANGE TO SEE IF THIS WILL WORK ON A SAMPLE
+            #Neg = search_whale.loc[search_whale['Id'] != whale_name]
+            Neg = search_whale.loc[search_whale['Id'].isin(search_items)]
+            Neg = Neg.loc[search_whale['Id'] != whale_name]
+            
             
             Pos = list(Pos.index.values)
             Neg = list(Neg.index.values)
@@ -203,17 +207,16 @@ def generate_arrays_from_files_BATCH(start = 0, batch_size = 327):
  
     
 #TRAIN MODEL ON BATCHES PASSED BY generate_arrays_from_files_BATCH FUNCTION
-def train_model():
+def train_model(epochs = 1, batch_size = 327):
     
     start = 0 
-    batch_size = 327
     n_batches = len(search_whale_img_list)/batch_size
     
     for n in range(n_batches):
     
         Anchor, Positive, Negative = generate_arrays_from_files_BATCH(start = start, batch_size = batch_size)
         y_train = np.ones(len(Anchor)).reshape(len(Anchor),1)
-        whaleModel_fuse.fit(x = [Anchor, Positive, Negative], y = y_train, epochs = 40, batch_size = 32)
+        whaleModel_fuse.fit(x = [Anchor, Positive, Negative], y = y_train, epochs = epochs, batch_size = 32)
         
         start = start + batch_size
     
@@ -221,6 +224,18 @@ def train_model():
         
         print(n)
 
+#TRAIN MODEL WRAPPER FUNCTION - TRAIN ONLY 1 EPOCH BUT RANDOMLY TOSS POSITIVES AND NEGATIVES
+#FOR EACH EPOCHS. THIS ADDRESSES THE FIXED NATURE OF DATASET THAT GETS BUILT FOR
+#EACH BATCH. THIS CAUSES UNDERREPRESENTATION IF THE NUMBER OF BATCHES IS SMALL
+def train_model_version2(n_epochs = 10):
+        
+    for c in range(n_epochs):
+        
+        train_model()
+        print(c)
+
+
 
 train_model()
+train_model_version2(n_epochs = 25)
 

@@ -69,9 +69,7 @@ TEST KNOWN NEGATIVES, Average distance = 0.78
 Out of 7: 6 identified as negative, 1 misidentified as positive.
 
 
-Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger; the model clearly needs more training on a larger set of data, but at this point it is simply too much asking from it that it effectively ports the embeddings learned from a very limited set to the population.
-
-Biggest challenge = computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings. I checked some misclassified images and in many cases it is pretty clear whey the model made a mistake - it would be hard for me to tell the difference.
+Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger; the model clearly needs more training on a larger set of data, however!! at this point the separation of positive and negative distances is clear, and just tested a set never seen [feb23]: 3 out of 7 positives recognized correctly, 3 not recognized, 1 recognized incorrectly. 2 out of 7 negatives misidentified as positive. CONCLUSION: EFFECTIVE EMBEDDINGS ARE BEING EFFECTIVELY BUILT. The only significant challenge I see is computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings. I checked some misclassified images and in many cases it is pretty clear whey the model made a mistake - it would be hard for me to tell the difference.
 
 
 

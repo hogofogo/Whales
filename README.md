@@ -60,29 +60,19 @@ Out of 7: 5 identified correctly, 1 misidentified as negative and 1 misidentifie
 TEST KNOWN NEGATIVES, Average distance = 0.61	
 Out of 7: 6 identified as negative, 1 misidentified as positive.
 
-CONCLUSION: THE MODEL WORKS! Next: after an extra 50 epochs on the same set of data but additionally shuffling permutations of paired images on every epoch, got this (and make sure to compare distances for positive and negative):
+CONCLUSION: THE MODEL WORKS! Next: after an extra 50 epochs on the same set of data but additionally shuffling permutations of paired images for every epoch, got this (and make sure to compare distances for positive and negative):
 
-test_positive()
-it's w_6202983, the distance is 0.156999
-it's w_7e8b270, the distance is 0.105604
-it's w_89e159a, the distance is 0.119235
-it's w_fe49bc4, the distance is 0.0862266
-it's w_6c803bf, the distance is 0.450876
-it's w_2d99a0c, the distance is 0.257582
-it's w_b0e05b1, the distance is 0.122136
-ALL WHALES CORRECTLY IDENTIFIED BY NAME
+TEST KNOWN POSITIVES, Average distance = 0.19
+Out of 7: all identified correctly
 
-test_negative()
-the distance is 0.967797
-the distance is 0.641945
-the distance is 1.23927
-the distance is 0.640177
-it's w_fe49bc4, the distance is 0.36092
-the distance is 0.701086
-the distance is 0.894855
-ONE MISIDENTIFICATION
+TEST KNOWN NEGATIVES, Average distance = 0.78	
+Out of 7: 6 identified as negative, 1 misidentified as positive.
+
 
 Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger; the model clearly needs more training on a larger set of data, but at this point it is simply too much asking from it that it effectively ports the embeddings learned from a very limited set to the population.
 
 Biggest challenge = computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings. I checked some misclassified images and in many cases it is pretty clear whey the model made a mistake - it would be hard for me to tell the difference.
+
+
+
 

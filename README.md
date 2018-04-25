@@ -69,6 +69,9 @@ CONCLUSION: IT HAS CLEARLY IMPROVED A LOT
 
 Also tested on data the model has not seen; as expected the gaps are narrower, overlaps are larger; the model clearly needs more training on a larger set of data, however!! at this point the separation of positive and negative distances is clear, and just tested a set never seen [feb23]: 3 out of 7 positives recognized correctly, 3 not recognized, 1 recognized incorrectly. 2 out of 7 negatives misidentified as positive. CONCLUSION: I HAVE ALSO SUCCEEDED IN BUILDING EFFECTIVE EMBEDDINGS. The only significant challenge I see is computational budget. Assuming it's solved, I expect manual pairing of similar whale images to be productive in training good embeddings. I checked some misclassified images and in many cases it is pretty clear whey the model made a mistake - it would be hard for me to tell the difference.
 
+Update Apr 23: I have trained the model on GPU and tested a sample where the model was expected to correctly identify the whale out of 2K images. I got it to ~20 percent correctly id'd. It worked very well on a small sample which served a good proof of concept. Now that GPU took care of the processing speed, the size of data is the bottleneck to be dealt with. Currently the model builds anchor-positive-negative in the following fashion: for each image, a random positive image and a random negative image are selected, with feature augmentation for each image. I will change the setup as follows: for each image, I will build all permutations of positives, and a random negative for each permutation. This should result in a much larger training set, which hopefully will be enough to improve the model performance. The problem to solve is how to feed the images from directory as they will be too large for memory. This is less straightforward than it seems despite Keras having an appropriate generator function, which works for single-stream data (I have three).
+
+
 
 
 
